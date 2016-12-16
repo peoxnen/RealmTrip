@@ -2,8 +2,10 @@ package iview.wsienski.realm;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,14 +49,32 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_add_dog)
     public void addDog(View view) {
-        Dog dog = new Dog();
-        String name = newName.getText().toString();
-        Integer age = Integer.valueOf(newAge.getText().toString());
-        dog.setName(name);
-        dog.setAge(age);
-        Timber.d("addDog: name="+name+" age="+age);
-        saveDogInDB(dog);
-        updateInfo();
+        String name = getNewName();
+        Integer age = getNewAge();
+        if(!TextUtils.isEmpty(name) && age>0) {
+            Dog dog = new Dog(name, age);
+            Timber.d("addDog: name=" + name + " age=" + age);
+            saveDogInDB(dog);
+            updateInfo();
+        }else{
+            Toast.makeText(this, "Wrong input data!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public String getNewName() {
+        return newName.getText().toString();
+    }
+
+    public int getNewAge() {
+        int age=0;
+        try{
+            age=Integer.valueOf(newAge.getText().toString());
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return age;
     }
 
     void saveDogInDB(Dog dog){
