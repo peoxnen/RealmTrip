@@ -11,6 +11,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 import io.realm.Sort;
 import timber.log.Timber;
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     TextView theOldestDogAge;
 
     Realm realm;
+    RealmResults<Dog> dogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +39,24 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Realm.init(this);
         realm = Realm.getDefaultInstance();
+
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+
+        dogs = realm.where(Dog.class).findAll();
+        updateInfo();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        updateInfo();
+        dogs.addChangeListener(new RealmChangeListener<RealmResults<Dog>>() {
+            @Override
+            public void onChange(RealmResults<Dog> results) {
+                updateInfo();
+            }
+        });
     }
 
     @OnClick(R.id.btn_add_dog)
@@ -85,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
     void updateInfo(){
         long number = realm.where(Dog.class).count();
-        setDogNumber(number);
-
         if(number>0) {
             updateDogInfo();
         }
