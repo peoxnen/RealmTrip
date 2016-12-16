@@ -10,24 +10,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="iview.wsienski.realm.MainActivity">
 <LinearLayout
-    android:layout_marginBottom="10dp"
     android:id="@+id/layout_buttons"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <Button
+        android:id="@+id/btn_add_dog"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="Add dog"/>
+        android:text="@string/add_dog"/>
     <EditText
-        android:hint="name"
+        android:id="@+id/new_name"
+        android:hint="@string/name"
         android:inputType="text"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content" />
     <EditText
-        android:hint="age"
+        android:id="@+id/new_age"
+        android:hint="@string/hint_age"
         android:inputType="number"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -39,27 +41,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView android:layout_width="match_parent"
-            android:text="INFORMATIONS:"
+            android:text="@string/informations"
+            android:textStyle="bold"
             android:padding="10dp"
             android:gravity="center"/>
         <TableRow>
-            <TextView android:text="Dog number:"
+            <TextView
+                android:text="@string/dog_number"
                 android:minWidth="50dp"
                />
-            <TextView android:text="12"
+            <TextView
+                android:id="@+id/tv_dog_number"
+                android:text=""
                 android:minWidth="50dp"
                 android:gravity="center"/>
         </TableRow>
         <TableRow>
-            <TextView android:text="The oldest dog:"
+            <TextView
+                android:text="@string/the_oldest_dog"
                 android:minWidth="50dp"/>
-            <TextView android:text="Rex"
+            <TextView
+                android:id="@+id/the_oldest_dog_name"
+                android:text=""
                 android:minWidth="50dp"
                 android:gravity="center"/>
-            <TextView android:text="Age:"
+            <TextView
+                android:text="@string/age"
                 android:minWidth="50dp"
                 android:gravity="center"/>
-            <TextView android:text="20"
+
+            <TextView
+                android:id="@+id/the_oldest_dog_age"
+                android:text=""
                 android:minWidth="50dp"
                 android:gravity="center"/>
         </TableRow>

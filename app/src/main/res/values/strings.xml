@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Realm</string>
+    <string name="age">Age:</string>
+    <string name="the_oldest_dog">The oldest dog:</string>
+    <string name="dog_number">Dog number:</string>
+    <string name="informations">INFORMATIONS:</string>
+    <string name="add_dog">Add dog</string>
+    <string name="name">name</string>
+    <string name="hint_age">age</string>
 </resources>
