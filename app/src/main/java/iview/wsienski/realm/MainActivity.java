@@ -28,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
         Dog dogFromDB = realm.where(Dog.class).greaterThan("age", 0).findFirst();
         int size = realm.where(Dog.class).findAll().size();
-        textView.setText(dogFromDB.getName() + "size=" +size);
+        textView.setText(dogFromDB.getName() + " size=" +size);
 
 
     }
+
 }

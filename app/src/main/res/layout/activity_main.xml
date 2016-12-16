@@ -9,8 +9,32 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="iview.wsienski.realm.MainActivity">
-
+<LinearLayout
+    android:layout_marginBottom="10dp"
+    android:id="@+id/layout_buttons"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Add dog"/>
+    <EditText
+        android:hint="name"
+        android:inputType="text"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:hint="age"
+        android:inputType="number"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content" />
+</LinearLayout>
     <TextView
+        android:layout_below="@id/layout_buttons"
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
