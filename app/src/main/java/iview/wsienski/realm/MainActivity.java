@@ -3,7 +3,6 @@ package iview.wsienski.realm;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     TextView theOldestDogName;
     @BindView(R.id.the_oldest_dog_age)
     TextView theOldestDogAge;
+    @BindView(R.id.remove_age)
+    TextView removeAge;
 
     Realm realm;
     RealmResults<Dog> dogs;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_add_dog)
-    public void addDog(View view) {
+    public void addDog() {
         String name = getNewName();
         Integer age = getNewAge();
         if(!TextUtils.isEmpty(name) && age>0) {
@@ -71,6 +72,27 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "Wrong input data!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @OnClick(R.id.btn_remove_dogs)
+    public void removeDogs(){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                RealmResults<Dog> dogs = bgRealm.where(Dog.class).greaterThan("age", getAgeToRemove()).findAll();
+                dogs.deleteAllFromRealm();
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(MainActivity.this, "Dogs successfully removed", Toast.LENGTH_LONG).show();
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                Toast.makeText(MainActivity.this, "Dogs were not removed", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public String getNewName() {
@@ -97,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     void updateInfo(){
         long number = realm.where(Dog.class).count();
+        setDogNumber(number);
         if(number>0) {
             updateDogInfo();
         }
@@ -115,6 +138,18 @@ public class MainActivity extends AppCompatActivity {
     public void setTheOldestDog(String name, int age){
         theOldestDogName.setText(name);
         theOldestDogAge.setText(String.valueOf(age));
+    }
+
+    public int getAgeToRemove(){
+        int age=Integer.MAX_VALUE;
+        try{
+            age=Integer.valueOf(removeAge.getText().toString());
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return age;
     }
 
     @Override
